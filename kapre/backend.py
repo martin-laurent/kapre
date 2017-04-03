@@ -1,9 +1,9 @@
 ''' Some backend computation with numpy.
 Similar computation with keras is on `backend_keras.py`.
 
-* Don't forget to use K.float()! Otherwise numpy uses float64. 
+* Don't forget to use K.float()! Otherwise numpy uses float64.
 * Some functions are copied-and-pasted from librosa (to reduce dependency), but
-    later I realised it'd be better to just use it. 
+    later I realised it'd be better to just use it.
     TODO: remove copied code and use librosa.
 '''
 from keras import backend as K
@@ -24,8 +24,8 @@ def eps():
 
 
 def a_weighting(frequencies):
-    return librosa.A_weighting(frequencies, min_db=-160.):
-    
+    return librosa.A_weighting(frequencies, min_db=-160.)
+
 
 def log_frequencies(n_bins=128, fmin=None, fmax=11025.0):
     """[np] Compute the center frequencies of bands
@@ -39,7 +39,7 @@ def log_frequencies(n_bins=128, fmin=None, fmax=11025.0):
 def mel_frequencies(n_mels=128, fmin=0.0, fmax=11025.0):
     """[np] Compute the center frequencies of mel bands.
     `htk` is removed.
-    
+
     Keunwoo: copied from Librosa
     """
 
@@ -67,8 +67,8 @@ def mel_frequencies(n_mels=128, fmin=0.0, fmax=11025.0):
 
     def _hz_to_mel(frequencies):
         """Convert Hz to Mels
-        
-        Keunwoo: copied from Librosa        
+
+        Keunwoo: copied from Librosa
         """
         frequencies = np.atleast_1d(frequencies)
 
@@ -114,7 +114,7 @@ def mel(sr, n_dft, n_mels=128, fmin=0.0, fmax=None):
     '''[np] create a filterbank matrix to combine stft bins into mel-frequency bins
     use Slaney
     Keunwoo: copied from Librosa, librosa.filters.mel
-    
+
     n_mels: numbre of mel bands
     fmin : lowest frequency [Hz]
     fmax : highest frequency [Hz]
@@ -205,7 +205,7 @@ def get_stft_kernels(n_dft, keras_ver='new'):
 
 
 def _hann(M, sym=True):
-    '''[np] 
+    '''[np]
     Return a Hann window.
     copied and pasted from scipy.signal.hann,
     https://github.com/scipy/scipy/blob/v0.14.0/scipy/signal/windows.py#L615
@@ -225,7 +225,7 @@ def _hann(M, sym=True):
     w : ndarray
         The window, with the maximum value normalized to 1 (though the value 1
         does not appear if `M` is even and `sym` is True).
-    
+
     '''
     if M < 1:
         return np.array([])
@@ -253,8 +253,8 @@ def filterbank_log(sr, n_freq, n_bins=84, bins_per_octave=12,
 
     Each filter is a log-normal window centered at the corresponding frequency.
 
-    Note: `logfrequency` in librosa 0.4 (deprecated), so copy-and-pasted, 
-        `tuning` was removed, `n_freq` instead of `n_fft`. 
+    Note: `logfrequency` in librosa 0.4 (deprecated), so copy-and-pasted,
+        `tuning` was removed, `n_freq` instead of `n_fft`.
 
     Parameters
     ----------
